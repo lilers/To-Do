@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">To Do</string>
+
+    <!-- Main Nav -->
+    <string name="addBtnTitle">Add</string>
+    <string name="deleteBtnTitle">Delete All</string>
+
+    <!-- Add and Edit Nav -->
+    <string name="saveBtnTitle">Save</string>
+    <string name="cancelBtnTitle">Cancel</string>
+
+    <!-- Add and Edit Frag -->
+    <string name="taskLabel">Task</string>
+    <string name="taskAddHint">Add a task here</string>
+    <string name="taskEditHint">Edit a task here</string>
+    <string name="infoLabel">Task Info</string>
+    <string name="infoAddHint">Add info/description here</string>
+    <string name="infoEditHint">Edit info/description here</string>
+    <string name="dueDateLabel">Due Date</string>
+    <string name="priorityLabel">Priority</string>
+    <string-array name="priorityArray">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
 </resources>

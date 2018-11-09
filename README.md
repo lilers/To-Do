@@ -4,7 +4,7 @@
 
 Submitted by: **Lily Tran**
 
-Time spent: **0.8** hours spent in total
+Time spent: **2.1** hours spent in total
 
 ## User Stories
 
@@ -20,25 +20,29 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [ ] Persist the todo items into SQLite instead of a text file using SQLiteOpenHelper or Room
-* [ ] Improve style of the todo items in the list using a custom adapter
+* [x] Persist the todo items into SQLite instead of a text file using Room
+* [x] Improve style of the todo items in the list using a custom adapter
 * [ ] Add support for completion due dates for todo items (and display within listview item)
 * [ ] Use a DialogFragment instead of new Activity for editing items
 * [ ] Improve the UI / UX of your app including icons, styling, color, spacing of your app.
-* [ ] Add support for selecting the priority of each todo item (and display in listview item)
+* [x] Add support for selecting the priority of each todo item (and display in listview item)
+* [x] Users can delete/clear all todo items
+* [x] Users can cancel adding/editing items
 * [ ] Anything else that you can get done to improve the app functionality or user experience!
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/EOxrRKX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/A4ISkE5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
 Describe any challenges encountered while building the app.
+
+I had trouble understanding how to implementing Room using only the CodePath guide and as a result ran into the "Cannot access database on main thread since it may potentially lock the UI for a long period of time". I found and used a [tutorial](https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118) to help me gain a deeper understanding. I chose to use LiveData and RxJava Observables instead of the other options (AsyncTask, using runInTransaction method, or  allowMainThreadQueries) because I thought that was best practice instead of what the tutorial and the CodePath guide suggested.
 
 ## License
 

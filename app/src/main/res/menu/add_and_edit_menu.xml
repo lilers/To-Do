@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/saveBtn"
+        android:title="@string/saveBtnTitle"
+        android:icon="@drawable/save_icon"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/cancelBtn"
+        android:title="@string/cancelBtnTitle"
+        android:icon="@drawable/cancel_icon"
+        app:showAsAction="always">
+    </item>
+</menu>
