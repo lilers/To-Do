@@ -26,7 +26,7 @@ public class AddAndEditTaskActivity extends AppCompatActivity {
 
         taskET = findViewById(R.id.taskET);
         infoET = findViewById(R.id.infoET);
-        dueDateET =findViewById(R.id.dueDateET);
+        dueDateET = findViewById(R.id.dueDateET);
         prioritySpinner = findViewById(R.id.prioritySpinner);
 
         Intent intent = getIntent();

@@ -2,16 +2,20 @@ package com.lilers.todo;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -58,11 +62,29 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-                Task task = adapter.getTaskAt(viewHolder.getAdapterPosition());
-                Toast.makeText(getApplicationContext(), task.getTitle() + " successfully " +
-                        "removed", Toast.LENGTH_SHORT).show();
-                taskViewModel.delete(task);
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
+                final Task task = adapter.getTaskAt(viewHolder.getAdapterPosition());
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setMessage("Are you sure you want to delete " + task.getTitle() + "?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getApplicationContext(), task.getTitle() + " successfully " +
+                                "removed", Toast.LENGTH_SHORT).show();
+                        taskViewModel.delete(task);
+                        dialog.dismiss();
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Swipe item back onto screen
+                        adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                        dialog.dismiss();
+                    }
+                });
+                TextView message = alert.show().findViewById(android.R.id.message);
+                message.setGravity(Gravity.CENTER);
             }
         }).attachToRecyclerView(toDoRV);
 
@@ -92,8 +114,25 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.deleteBtn:
-                taskViewModel.deleteAllTasks();
-                Toast.makeText(getApplicationContext(), "All tasks deleted", Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setMessage("Are you sure you want to delete all tasks?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskViewModel.deleteAllTasks();
+                        Toast.makeText(getApplicationContext(), "All tasks deleted",
+                                Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                TextView message = alert.show().findViewById(android.R.id.message);
+                message.setGravity(Gravity.CENTER);
                 return true;
             case R.id.addBtn:
                 Intent intent = new Intent(MainActivity.this, AddAndEditTaskActivity.class);
