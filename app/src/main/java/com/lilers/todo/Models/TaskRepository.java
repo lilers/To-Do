@@ -1,4 +1,4 @@
-package com.lilers.todo;
+package com.lilers.todo.Models;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;

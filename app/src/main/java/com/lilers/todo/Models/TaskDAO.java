@@ -1,4 +1,4 @@
-package com.lilers.todo;
+package com.lilers.todo.Models;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

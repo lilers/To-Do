@@ -1,4 +1,4 @@
-package com.lilers.todo;
+package com.lilers.todo.Views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -20,6 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.lilers.todo.MainActivity;
+import com.lilers.todo.R;
+import com.lilers.todo.Models.Task;
+import com.lilers.todo.Models.TaskAdapter;
+import com.lilers.todo.ViewModels.SharedViewModel;
+import com.lilers.todo.ViewModels.TaskViewModel;
 
 import java.util.List;
 
@@ -43,6 +50,7 @@ public class MainFragment extends Fragment {
         toDoRV.setHasFixedSize(true);
         final TaskAdapter adapter = new TaskAdapter();
         toDoRV.setAdapter(adapter);
+
         taskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
@@ -63,6 +71,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
                 final Task task = adapter.getTaskAt(viewHolder.getAdapterPosition());
+
                 AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
                 alert.setMessage("Are you sure you want to delete " + task.getTitle() + "?");
                 alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -92,8 +101,8 @@ public class MainFragment extends Fragment {
             @Override
             public void onItemClick(Task task) {
                 sharedViewModel.setTask(task);
-                MainActivity.fM.beginTransaction().replace(R.id.container, new AddAndEditFragment())
-                        .addToBackStack(null).commit();
+                EditDialogFragment editDialog = new EditDialogFragment();
+                editDialog.show(MainActivity.fM, null);
             }
         });
 
@@ -151,7 +160,7 @@ public class MainFragment extends Fragment {
                 return true;
             case R.id.addBtn:
                 sharedViewModel.setTask(null);
-                MainActivity.fM.beginTransaction().replace(R.id.container, new AddAndEditFragment())
+                MainActivity.fM.beginTransaction().replace(R.id.container, new AddFragment())
                         .addToBackStack(null).commit();
                 return true;
             default:

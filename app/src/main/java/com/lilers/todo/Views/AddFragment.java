@@ -1,4 +1,4 @@
-package com.lilers.todo;
+package com.lilers.todo.Views;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,24 +15,32 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AddAndEditFragment extends Fragment {
+import com.lilers.todo.MainActivity;
+import com.lilers.todo.R;
+import com.lilers.todo.Models.Task;
+import com.lilers.todo.ViewModels.SharedViewModel;
+
+public class AddFragment extends Fragment {
     private EditText taskET, infoET, dueDateET;
     private Spinner prioritySpinner;
     private SharedViewModel sharedViewModel;
     private Task currentTask;
 
-    public AddAndEditFragment() {
+    public AddFragment() {
         this.setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add_and_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_add, container, false);
         taskET = view.findViewById(R.id.taskET);
         infoET = view.findViewById(R.id.infoET);
         dueDateET = view.findViewById(R.id.dueDateET);
         prioritySpinner = view.findViewById(R.id.prioritySpinner);
+
+        getActivity().setTitle("Add Task");
+
         return view;
     }
 
@@ -44,24 +52,14 @@ public class AddAndEditFragment extends Fragment {
         sharedViewModel.getTask().observe(getViewLifecycleOwner(), new Observer<Task>() {
             @Override
             public void onChanged(@Nullable Task task) {
-                if (task != null) {
-                    getActivity().setTitle("Edit Task");
-                    taskET.setText(task.getTitle());
-                    infoET.setText(task.getInfo());
-                    dueDateET.setText(task.getDueDate());
-                    prioritySpinner.setSelection(getIndexOf(task.getPriority()));
-                    currentTask = task;
-                } else {
-                    getActivity().setTitle("Add Task");
-                    currentTask = new Task();
-                }
+                currentTask = new Task();
             }
         });
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.add_and_edit_menu, menu);
+        inflater.inflate(R.menu.add_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -94,22 +92,6 @@ public class AddAndEditFragment extends Fragment {
             sharedViewModel.setTask(currentTask);
 
             MainActivity.fM.popBackStack();
-        }
-    }
-
-    /*
-     * Gets the index of the priority string
-     */
-    private int getIndexOf(String string) {
-        switch (string) {
-            case "Low":
-                return 0;
-            case "Medium":
-                return 1;
-            case "High":
-                return 2;
-            default:
-                return 0;
         }
     }
 }

@@ -1,9 +1,12 @@
-package com.lilers.todo;
+package com.lilers.todo.ViewModels;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
+
+import com.lilers.todo.Models.Task;
+import com.lilers.todo.Models.TaskRepository;
 
 import java.util.List;
 
