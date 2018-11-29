@@ -72,7 +72,7 @@ public class EditDialogFragment extends DialogFragment {
                 currentTask = task;
                 taskET.setText(task.getTitle());
                 infoET.setText(task.getInfo());
-                dueDateET.setText(task.getDueDate());
+                //dueDateET.setText(task.getDueDate());
                 prioritySpinner.setSelection(getIndexOf(task.getPriority()));
             }
         });
@@ -88,7 +88,7 @@ public class EditDialogFragment extends DialogFragment {
         } else {
             currentTask.setTitle(title);
             currentTask.setInfo(info);
-            currentTask.setDueDate(dueDate);
+            //currentTask.setDueDate(dueDate);
             currentTask.setPriority(priority);
             sharedViewModel.setTask(currentTask);
         }

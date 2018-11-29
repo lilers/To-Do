@@ -3,11 +3,14 @@ package com.lilers.todo.Models;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "Tasks")
 public class Task {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String title, info, dueDate, priority;
+    private String title, info, priority;
+    private Date dueDate;
 
     public int getId() {
         return id;
@@ -33,11 +36,11 @@ public class Task {
         this.info = info;
     }
 
-    public String getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.lilers.todo.R;
 
+import java.text.SimpleDateFormat;
+
 public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     private OnItemClickListener listener;
 
@@ -24,9 +26,10 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     @Override
     public void onBindViewHolder(@NonNull TaskHolder taskHolder, int i) {
         Task task = getItem(i);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
         taskHolder.title.setText(task.getTitle());
         taskHolder.info.setText(task.getInfo());
-        taskHolder.dueDate.setText(task.getDueDate());
+        taskHolder.dueDate.setText(dateFormat.format(task.getDueDate()));
         taskHolder.priority.setText(task.getPriority());
     }
 
