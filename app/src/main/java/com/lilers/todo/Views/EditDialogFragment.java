@@ -1,6 +1,7 @@
 package com.lilers.todo.Views;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -12,6 +13,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -20,11 +22,19 @@ import com.lilers.todo.R;
 import com.lilers.todo.Models.Task;
 import com.lilers.todo.ViewModels.SharedViewModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class EditDialogFragment extends DialogFragment {
     private EditText taskET, infoET, dueDateET;
     private Spinner prioritySpinner;
     private SharedViewModel sharedViewModel;
     private Task currentTask;
+    private DatePickerDialog datePicker;
+    private DatePickerDialog.OnDateSetListener dateListener;
+    private Date date;
+    private SimpleDateFormat dateFormat;
 
     @NonNull
     @Override
@@ -35,6 +45,7 @@ public class EditDialogFragment extends DialogFragment {
         infoET = view.findViewById(R.id.infoET);
         dueDateET = view.findViewById(R.id.dueDateET);
         prioritySpinner = view.findViewById(R.id.prioritySpinner);
+        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
         AlertDialog.Builder editDialog = new AlertDialog.Builder(getActivity());
         editDialog.setTitle("Edit task");
@@ -52,6 +63,9 @@ public class EditDialogFragment extends DialogFragment {
                 dialog.dismiss();
             }
         });
+
+        setUpPopUpCalendar();
+
         return editDialog.create();
     }
 
@@ -70,10 +84,16 @@ public class EditDialogFragment extends DialogFragment {
             @Override
             public void onChanged(@Nullable Task task) {
                 currentTask = task;
+                Date date = task.getDueDate();
+                Calendar calendar = Calendar.getInstance();
                 taskET.setText(task.getTitle());
                 infoET.setText(task.getInfo());
-                //dueDateET.setText(task.getDueDate());
+                dueDateET.setText(dateFormat.format(date));
                 prioritySpinner.setSelection(getIndexOf(task.getPriority()));
+                calendar.setTime(date);
+                // Need to fix cause date is saved even if canceled
+                datePicker = new DatePickerDialog(getContext(), dateListener, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
             }
         });
     }
@@ -88,7 +108,7 @@ public class EditDialogFragment extends DialogFragment {
         } else {
             currentTask.setTitle(title);
             currentTask.setInfo(info);
-            //currentTask.setDueDate(dueDate);
+            currentTask.setDueDate(date);
             currentTask.setPriority(priority);
             sharedViewModel.setTask(currentTask);
         }
@@ -108,5 +128,37 @@ public class EditDialogFragment extends DialogFragment {
             default:
                 return 0;
         }
+    }
+
+    private void setUpPopUpCalendar() {
+        final Calendar calendar = Calendar.getInstance();
+        dateListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                date = calendar.getTime();
+                dueDateET.setText(dateFormat.format(date));
+            }
+        };
+
+        dueDateET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if ((hasFocus) && (!datePicker.isShowing())) {
+                    datePicker.show();
+                }
+            }
+        });
+
+        dueDateET.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!datePicker.isShowing()) {
+                    datePicker.show();
+                }
+            }
+        });
     }
 }
