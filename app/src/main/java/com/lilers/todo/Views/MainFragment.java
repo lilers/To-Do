@@ -93,6 +93,7 @@ public class MainFragment extends Fragment {
                 });
                 TextView message = alert.show().findViewById(android.R.id.message);
                 message.setGravity(Gravity.CENTER);
+                message.setTextSize(20);
             }
         }).attachToRecyclerView(toDoRV);
 
@@ -157,6 +158,7 @@ public class MainFragment extends Fragment {
                 });
                 TextView message = alert.show().findViewById(android.R.id.message);
                 message.setGravity(Gravity.CENTER);
+                message.setTextSize(20);
                 return true;
             case R.id.addBtn:
                 sharedViewModel.setTask(null);

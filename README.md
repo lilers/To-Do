@@ -1,10 +1,10 @@
-# Project 1 - *To Do*
+# Pre-work - *To Do*
 
 **To Do** is an android app that allows building a todo list and basic todo items management functionality including adding new items, editing and deleting an existing item.
 
 Submitted by: **Lily Tran**
 
-Time spent: **2.1** hours spent in total
+Time spent: **7.8** hours spent in total
 
 ## User Stories
 
@@ -22,21 +22,33 @@ The following **additional** features are implemented:
 
 * [x] Persist the todo items into SQLite instead of a text file using Room
 * [x] Improve style of the todo items in the list using a custom adapter
-* [ ] Add support for completion due dates for todo items (and display within listview item)
-* [ ] Use a DialogFragment instead of new Activity for editing items
-* [ ] Improve the UI / UX of your app including icons, styling, color, spacing of your app.
+* [x] Add support for completion due dates for todo items (and display within listview item)
+* [x] Use a DialogFragment instead of new Activity for editing items
+* [x] Improve the UI / UX of your app including icons, styling, color, spacing of your app.
 * [x] Add support for selecting the priority of each todo item (and display in listview item)
 * [x] Users can delete/clear all todo items
 * [x] Users can cancel adding/editing items
-* [ ] Anything else that you can get done to improve the app functionality or user experience!
+* [x] Use a DatePickerDialog to allow users to pick a due date from a calendar
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/A4ISkE5.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/WOtpxFb.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
+
+## Project Analysis
+
+As part of your pre-work submission, please reflect on the app and answer the following questions below:
+
+**Question 1:** "What are your reactions to the Android app development platform so far? Compare and contrast Android's approach to layouts and user interfaces in past platforms you've used."
+
+**Answer:** I've had experience using Android Studio before, so nothing was new or unexpected for me. There are a number of differences between Android Studio and Xcode. For example Android Studio doesn't have an automatic split view for layouts and layout files like Xcode. Also when connecting any layout items to the layout file Android Studio requires you to find it by id unlike Xcode where you can click and drag to make a connection. Overall I think Android Studio is a good platform.
+
+**Question 2:** "Take a moment to reflect on the `ArrayAdapter` used in your pre-work. How would you describe an adapter in this context and what is its function in Android? Why do you think the adapter is important? Explain the purpose of the `convertView` in the `getView` method of the `ArrayAdapter`."
+
+**Answer:** The ArrayAdapter converted our list items into views that could be used to populate our ListView. Based on this information I concluded that adapters provide acess to data and are responsible for creating views for the data. This task is important because it allows the data to be presented to the user. The convertView checks if there's an existing view and reuses it if it exists, otherwise a view is created.
 
 ## Notes
 

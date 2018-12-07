@@ -12,14 +12,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.lilers.todo.MainActivity;
-import com.lilers.todo.R;
 import com.lilers.todo.Models.Task;
+import com.lilers.todo.R;
 import com.lilers.todo.ViewModels.SharedViewModel;
 
 import java.text.SimpleDateFormat;
@@ -46,6 +47,11 @@ public class AddFragment extends Fragment {
         infoET = view.findViewById(R.id.infoET);
         dueDateET = view.findViewById(R.id.dueDateET);
         prioritySpinner = view.findViewById(R.id.prioritySpinner);
+        ArrayAdapter<CharSequence> priorityAdapter = ArrayAdapter.createFromResource(
+                getContext(), R.array.priorityArray, R.layout.spinner_item);
+
+        priorityAdapter.setDropDownViewResource(R.layout.spinner_drop_down);
+        prioritySpinner.setAdapter(priorityAdapter);
 
         getActivity().setTitle("Add Task");
 
@@ -88,7 +94,7 @@ public class AddFragment extends Fragment {
     }
 
     private void saveTask() {
-        String title = taskET.getText().toString(), info = infoET.getText().toString(),
+        String title = taskET.getText().toString().trim(), info = infoET.getText().toString().trim(),
                 dueDate = dueDateET.getText().toString(),
                 priority = prioritySpinner.getSelectedItem().toString();
 

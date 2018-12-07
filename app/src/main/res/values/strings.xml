@@ -17,6 +17,7 @@
     <string name="infoAddHint">Add info/description here</string>
     <string name="infoEditHint">Edit info/description here</string>
     <string name="dueDateLabel">Due Date</string>
+    <string name="dueDateHint">Add a due date here</string>
     <string name="priorityLabel">Priority</string>
     <string-array name="priorityArray">
         <item>Low</item>
@@ -24,6 +25,9 @@
         <item>High</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Task Item Placeholders -->
+    <string name="titleHolder">Title</string>
+    <string name="dueDateHolder">Due Date</string>
+    <string name="infoHolder">Info</string>
+    <string name="priorityHolder">Priority</string>
 </resources>

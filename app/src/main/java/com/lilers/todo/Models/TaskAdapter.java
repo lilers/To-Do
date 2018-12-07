@@ -1,6 +1,8 @@
 package com.lilers.todo.Models;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.recyclerview.extensions.ListAdapter;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -27,10 +29,12 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
     public void onBindViewHolder(@NonNull TaskHolder taskHolder, int i) {
         Task task = getItem(i);
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/YYYY");
+        Resources resources = taskHolder.priority.getContext().getResources();
         taskHolder.title.setText(task.getTitle());
         taskHolder.info.setText(task.getInfo());
         taskHolder.dueDate.setText(dateFormat.format(task.getDueDate()));
         taskHolder.priority.setText(task.getPriority());
+        taskHolder.priority.setTextColor(getPriorityColor(resources, task.getPriority()));
     }
 
     public TaskAdapter() {
@@ -89,5 +93,18 @@ public class TaskAdapter extends ListAdapter<Task, TaskAdapter.TaskHolder> {
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    private int getPriorityColor(Resources resources, String priority) {
+        switch (priority) {
+            case "Low":
+                return ResourcesCompat.getColor(resources, R.color.lowPriority, null);
+            case "Medium":
+                return ResourcesCompat.getColor(resources, R.color.mediumPriority, null);
+            case "High":
+                return ResourcesCompat.getColor(resources, R.color.highPriority, null);
+            default:
+                return ResourcesCompat.getColor(resources, R.color.unknownPriority, null);
+        }
     }
 }

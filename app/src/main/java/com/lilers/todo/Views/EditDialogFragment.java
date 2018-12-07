@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,15 +14,18 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lilers.todo.R;
 import com.lilers.todo.Models.Task;
+import com.lilers.todo.R;
 import com.lilers.todo.ViewModels.SharedViewModel;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -46,9 +50,20 @@ public class EditDialogFragment extends DialogFragment {
         dueDateET = view.findViewById(R.id.dueDateET);
         prioritySpinner = view.findViewById(R.id.prioritySpinner);
         dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        TextView title = new TextView(getContext());
+        ArrayAdapter<CharSequence> priorityAdapter = ArrayAdapter.createFromResource(
+                getContext(), R.array.priorityArray, R.layout.spinner_item);
+
+        priorityAdapter.setDropDownViewResource(R.layout.spinner_drop_down);
+        prioritySpinner.setAdapter(priorityAdapter);
 
         AlertDialog.Builder editDialog = new AlertDialog.Builder(getActivity());
+        title.setText("Edit Task");
+        title.setTypeface(null, Typeface.BOLD);
+        title.setTextSize(32);
+        title.setPadding(32, 32, 0, 0);
         editDialog.setTitle("Edit task");
+        editDialog.setCustomTitle(title);
         editDialog.setView(view);
         editDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
             @Override
@@ -99,7 +114,7 @@ public class EditDialogFragment extends DialogFragment {
     }
 
     private void saveTask() {
-        String title = taskET.getText().toString(), info = infoET.getText().toString(),
+        String title = taskET.getText().toString().trim(), info = infoET.getText().toString().trim(),
                 dueDate = dueDateET.getText().toString(),
                 priority = prioritySpinner.getSelectedItem().toString();
 
@@ -108,7 +123,15 @@ public class EditDialogFragment extends DialogFragment {
         } else {
             currentTask.setTitle(title);
             currentTask.setInfo(info);
-            currentTask.setDueDate(date);
+            if (date != null) {
+                currentTask.setDueDate(date);
+            } else {
+                try {
+                    currentTask.setDueDate(dateFormat.parse(dueDate));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
             currentTask.setPriority(priority);
             sharedViewModel.setTask(currentTask);
         }
